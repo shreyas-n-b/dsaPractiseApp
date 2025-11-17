@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<algorithm>
 
 using namespace std;
 
@@ -57,3 +58,35 @@ void mergeSort(vector<int>& arr, int left, int right) {
 }
 
 //MERGE SORT ENDS.
+
+//QUICK SORT BEGINS
+
+int partition(vector<int>& arr, int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+    
+    for (int j = low; j < high; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    
+    swap(arr[i + 1], arr[high]);
+    return i + 1;
+}
+
+void quicksort(vector<int>& arr, int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quicksort(arr, low, pi - 1);
+        quicksort(arr, pi + 1, high);
+    }
+}
+
+void quick_sort(vector<int>& arr) {
+    if (arr.size() <= 1) return;
+    quicksort(arr, 0, arr.size() - 1);
+}
+
+//QUICK SORT ENDS
