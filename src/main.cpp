@@ -7,8 +7,13 @@ using namespace std;
 
 int main() 
 {
-    vector<int> sizes = {1000, 5000, 10000, 20000};  // n values
-    int reps = 5;                                    // repetitions
+    int size=1000;
+    vector<int> sizes;
+    for(int i=0; i<402; i++){
+        size += 10;
+        sizes.push_back(size);
+    }
+    int reps = 3;                                    // repetitions
 
     cout << "Sorting Benchmarks\n";
     cout << "------------------\n";

@@ -6,25 +6,6 @@ using namespace std;
 
 //MERGE SORT BEGINS
 
-void mergeSort(std::vector<int>& arr) {
-    if (arr.size() > 1) {
-        mergeSort(arr, 0, (arr.size()-1));   // call internal helper
-    }
-}
-
-
-void mergeSort(std::vector<int>& arr, int left, int right) {
-    if (left < right) {
-        int mid = left + (right - left) / 2;
-
-        mergeSort(arr, left, mid);
-        mergeSort(arr, mid + 1, right);
-
-        merge(arr, left, mid + 1, right);
-    }
-}
-
-
 void merge(std::vector<int>& arr, int a0, int b0, int bn) {
     int n1 = b0 - a0;
     int n2 = bn - b0 + 1;
@@ -62,6 +43,23 @@ void merge(std::vector<int>& arr, int a0, int b0, int bn) {
 
     for (int m = a0, n = 0; m <= bn; m++, n++) {
         arr[m] = r[n];
+    }
+}
+
+void mergesort(std::vector<int>& arr, int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+
+        mergesort(arr, left, mid);
+        mergesort(arr, mid + 1, right);
+
+        merge(arr, left, mid + 1, right);
+    }
+}
+
+void mergeSort(std::vector<int>& arr) {
+    if (arr.size() > 1) {
+        mergesort(arr, 0, (arr.size()-1));   // call internal helper
     }
 }
 

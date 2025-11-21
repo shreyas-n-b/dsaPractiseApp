@@ -2,6 +2,7 @@
 #include "utils.h"
 
 #include <iostream>
+#include<algorithm>
 #include <vector>
 #include <chrono>
 #include <fstream>
@@ -9,6 +10,33 @@
 #include <cmath>
 
 using namespace std;
+
+double trimmedMean(const std::vector<double>& times) {
+    if (times.size() < 3) {
+        // Too few elements → fall back to normal mean
+        return std::accumulate(times.begin(), times.end(), 0.0) / times.size();
+    }
+
+    std::vector<double> sortedTimes = times;
+    std::sort(sortedTimes.begin(), sortedTimes.end());
+
+    int n = sortedTimes.size();
+    int trim = n * 0.1; // 10% trim
+
+    // Ensure we don't trim all elements
+    if (trim * 2 >= n) trim = 0;
+
+    double sum = 0.0;
+    int count = 0;
+
+    for (int i = trim; i < n - trim; i++) {
+        sum += sortedTimes[i];
+        count++;
+    }
+
+    return sum / count;
+}
+
 
 // --------------------------------------------------------
 // Benchmark Sorting Algorithms  (SKELETON ONLY)
@@ -53,7 +81,7 @@ void benchmarkSort(
         }
 
         // STEP 6 → calculate average
-        double avg = accumulate(times.begin(), times.end(), 0.0) / times.size();
+        double avg = trimmedMean(times);
 
         // STEP 7 → calculate standard deviation
         double sumSq = 0;
